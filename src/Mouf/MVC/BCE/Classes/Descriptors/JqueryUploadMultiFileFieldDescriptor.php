@@ -9,6 +9,7 @@ use Mouf\MVC\BCE\BCEForm;
 use Mouf\Html\Widgets\JqueryFileUpload\JqueryFileUploadWidget;
 use Mouf\MVC\BCE\FileBeanInterface;
 use Mouf\MVC\BCE\Classes\BCEException;
+use Mouf\MVC\BCE\FileDaoInterface;
 
 /**
  * This class is used to manage the upload of multiple files in a bean.

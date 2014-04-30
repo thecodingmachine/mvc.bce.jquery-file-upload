@@ -79,4 +79,4 @@ Go to your `BCEForm` in instance mode, and in the list of `fieldDescriptors`, dr
 
 Now, configure the instance you just drag'n'dropped:
 
-TODO
+![Field descriptor](doc/images/jqueryfileuploadmultifielddescritor.png)

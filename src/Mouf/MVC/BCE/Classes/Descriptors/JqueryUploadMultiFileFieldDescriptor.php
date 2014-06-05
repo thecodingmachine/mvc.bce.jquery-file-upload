@@ -118,7 +118,7 @@ class JqueryUploadMultiFileFieldDescriptor extends FieldDescriptor {
 					if (md5($bean->getFullPath()) == $fileMd5) {
 						$result = unlink($bean->getFullPath());
 						if (!$result) {
-							throw new BCEException("Unable to delete file ".$result);
+							throw new BCEException("Unable to delete file ".$bean->getFullPath());
 						}
 						$this->fileDao->delete($bean);
 					}

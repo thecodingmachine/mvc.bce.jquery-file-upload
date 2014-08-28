@@ -145,12 +145,44 @@ class JqueryUploadMultiFileFieldDescriptor extends FieldDescriptor {
 			
 			$fileBean = $this->fileDao->create();
 			/* @var $fileBean FileBeanInterface */
-			$fileBean->setFileName($file->getFileName());
 			$fileBean->setMainBean($bean);
-			$this->fileDao->save($fileBean);
+				
+			$fileName = $file->getFileName();
+			$fileBean->setFileName($fileName);
 			$destination = $fileBean->getFullPath();
+				
+			// Let's check the destination does not exist. If it does, let's increment a counter until we are ok.
+			if (file_exists($destination)) {
+				$i = 2;
+				while (true) {
+					$newFileName = self::getIncrementedFileName($fileName, $i);
+					$fileBean->setFileName($newFileName);
+					$destination = $fileBean->getFullPath();
+					if (!file_exists($destination)) {
+						break;
+					}
+					
+					$i++;
+				}
+			}
+			
+			$this->fileDao->save($fileBean);
+			
 			$file->moveAndRename(dirname($destination), basename($destination));
 		}
+	} 
+	
+	/**
+	 * Increment a counter inside a filename.
+	 * 
+	 * @param string $path
+	 * @param int $number
+	 * @return string
+	 */
+	private static function getIncrementedFileName($path, $number) {
+		$pathInfo = pathinfo($path);
+		
+		return $pathInfo['filename'].' ('.$number.').'.$pathInfo['extension'];
 	} 
 	
 	/**

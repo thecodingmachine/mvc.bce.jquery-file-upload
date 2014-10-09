@@ -40,6 +40,12 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
      */
     protected $value;
 
+    /**
+     * Whether the file should be overrided if it already exists
+     * @var bool
+     */
+    protected $allowOverride = true;
+
 
     /**
      * @param string $fullPathGetter The name of the function that returns the full path to the file.
@@ -134,6 +140,10 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
                 }
             }
 
+            //delete the file if it already exists and allowOverride property is set to true
+            if($this->allowOverride && $file->fileExists($fullPath2)){
+                unlink($fullPath2);
+            }
             $file->moveAndRename(dirname($fullPath2), basename($fullPath2));
         }
     }
@@ -156,7 +166,6 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
         return $fieldValue;
     }
 
-
     /**
      * Returns the bean's value after loading the descriptor
      */
@@ -169,6 +178,14 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
      */
     public function getFieldLabel() {
         return $this->label;
+    }
+
+    /**
+     * @param boolean $allowOverride
+     */
+    public function setAllowOverride($allowOverride)
+    {
+        $this->allowOverride = $allowOverride;
     }
 
     /**

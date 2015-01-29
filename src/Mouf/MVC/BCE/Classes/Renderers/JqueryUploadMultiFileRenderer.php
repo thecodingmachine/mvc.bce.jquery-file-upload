@@ -5,7 +5,9 @@
 
 namespace Mouf\MVC\BCE\Classes\Renderers;
 
+use Mouf\Html\Utils\WebLibraryManager\WebLibraryManager;
 use Mouf\Html\Widgets\TreeSelectField\TreeSelectField;
+use Mouf\MVC\BCE\Classes\Descriptors\BCEFieldDescriptorInterface;
 use Mouf\MVC\BCE\Classes\Descriptors\FieldDescriptorInstance;
 use Mouf\Html\Widgets\Form;
 use Mouf\MVC\BCE\Classes\ValidationHandlers\BCEValidationUtils;
@@ -52,7 +54,7 @@ class JqueryUploadMultiFileRenderer extends DefaultViewFieldRenderer implements 
      * (non-PHPdoc)
      * @see FieldRendererInterface::getJS()
      */
-    public function getJSEdit($descriptor, $bean, $id){
+    public function getJSEdit(BCEFieldDescriptorInterface $descriptor, $bean, $id, WebLibraryManager $webLibraryManager){
         /* @var $descriptorInstance FieldDescriptorInstance */
         return array();
     }

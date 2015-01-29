@@ -14,7 +14,7 @@
     ],
     "require": {
     	"php": ">=5.3.0",
-    	"mouf/mvc.bce": "~3.2",
+    	"mouf/mvc.bce": "~4.0",
 	"mouf/html.widgets.jqueryfileupload": "dev-master"
     },
     "autoload": {

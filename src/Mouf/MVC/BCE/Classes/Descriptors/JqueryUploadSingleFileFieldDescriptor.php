@@ -72,7 +72,7 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
     }
 
 
-    /**
+    /*
      * (non-PHPdoc)
      * For a FieldDecsriptor instance, the preSave function id responsible for :
      *  - unformatting the posted value
@@ -81,14 +81,7 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
      *  - settings the linked ids to associate in mapping table (Many2ManyFieldDEscriptors)
      * @see BCEFieldDescriptorInterface::preSave()
      */
-    public function preSave($post, BCEForm &$form, $bean, $isNew) {}
-
-
-    /**
-     * (non-PHPdoc)
-     * @see BCEFieldDescriptorInterface::postSave()
-     */
-    public function postSave($bean, $beanId, $postValues) {
+    public function preSave($post, BCEForm &$form, $bean, $isNew) {
 
         $fullPath = call_user_func(array($bean, $this->fullPathGetter));
 
@@ -100,14 +93,14 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
         // First, let's get the name of the remove field.
         $deleteName = $this->fileUploaderWidget->getDeleteName();
 
-        if($postValues != null) {
-            $removes = isset($postValues[$deleteName]) ? $postValues[$deleteName] : null;
+        if($post != null) {
+            $removes = isset($post[$deleteName]) ? $post[$deleteName] : null;
         } else {
             $removes = get($deleteName);
         }
         if($removes) {
 
-           foreach ($removes as $fileMd5) {
+            foreach ($removes as $fileMd5) {
                 if (md5($fullPath) == $fileMd5) {
                     $result = unlink($fullPath);
                     if (!$result) {
@@ -119,7 +112,7 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
 
         }
 
-        foreach ($this->fileUploaderWidget->getFiles($postValues[$this->getFieldName()]) as $file) {
+        foreach ($this->fileUploaderWidget->getFiles($post[$this->getFieldName()]) as $file) {
             call_user_func(array($bean, $this->fileNameSetter), $file->getFileName());
             $fullPath2 = call_user_func(array($bean, $this->fullPathGetter));
 
@@ -146,6 +139,15 @@ class JqueryUploadSingleFileFieldDescriptor extends FieldDescriptor {
             }
             $file->moveAndRename(dirname($fullPath2), basename($fullPath2));
         }
+    }
+
+
+    /**
+     * (non-PHPdoc)
+     * @see BCEFieldDescriptorInterface::postSave()
+     */
+    public function postSave($bean, $beanId, $postValues) {
+
     }
 
     /**
